@@ -26,29 +26,47 @@ class LoginScreen extends StatelessWidget with ValidationMixins {
   }
 
   Widget emailField() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          decoration: InputDecoration(
-              labelText: 'Email',
-              hintText: 'you@example.com',
-              errorText: 'err'),
-          validator: validateEmail),
+    return StreamBuilder(
+      stream: bloc.transformEmail,
+      //initialData: initialData ,
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: bloc.changeEmail,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                  labelText: 'Email',
+                  hintText: 'you@example.com',
+                  errorText: snapshot.error),
+            ),
+          ),
+        );
+      },
     );
   }
 
   Widget passwordField() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextFormField(
-          keyboardType: TextInputType.text,
-          obscureText: true,
-          decoration: InputDecoration(
-            labelText: 'Password',
-            hintText: '',
+    return StreamBuilder(
+      stream: bloc.transformPassword,
+      //initialData: initialData ,
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        return Container(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              onChanged: bloc.changePassword,
+              keyboardType: TextInputType.text,
+              obscureText: true,
+              decoration: InputDecoration(
+                  labelText: 'Password',
+                  hintText: '***',
+                  errorText: snapshot.error),
+            ),
           ),
-          validator: validatePassword),
+        );
+      },
     );
   }
 

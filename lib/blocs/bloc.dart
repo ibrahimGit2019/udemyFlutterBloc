@@ -7,13 +7,17 @@ class Bloc with BlocValidators {
   final _passwordController = StreamController<String>();
 
   Function(String) get changeEmail => _emailController.sink.add;
-  Function(String) get changePassword => _emailController.sink.add;
+  Function(String) get changePassword => _passwordController.sink.add;
 
-  Stream<String> get listenEmail => _emailController.stream;
-  Stream<String> get listenPassword => _passwordController.stream;
+  Stream<String> get transformEmail =>
+      _emailController.stream.transform(emailValidator);
+  Stream<String> get transformPassword =>
+      _passwordController.stream.transform(passwordValidator);
 
   void dispose() {
     _emailController.close();
     _passwordController.close();
   }
 }
+
+final bloc = Bloc();
