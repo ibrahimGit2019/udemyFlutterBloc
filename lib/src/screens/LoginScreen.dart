@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/blocs/Provider.dart';
 import 'package:login_page/blocs/bloc.dart';
 import 'package:login_page/mixins/validation_mixin.dart';
 
@@ -9,14 +10,15 @@ class LoginScreen extends StatelessWidget with ValidationMixins {
 
   @override
   Widget build(BuildContext context) {
+    var bloc = Provider.of(context);
     return Container(
       margin: EdgeInsets.all(10),
       child: Form(
         key: formKey,
         child: Column(
           children: <Widget>[
-            emailField(),
-            passwordField(),
+            emailField(bloc),
+            passwordField(bloc),
             Divider(),
             submitButton(),
           ],
@@ -25,7 +27,7 @@ class LoginScreen extends StatelessWidget with ValidationMixins {
     );
   }
 
-  Widget emailField() {
+  Widget emailField(Bloc bloc) {
     return StreamBuilder(
       stream: bloc.transformEmail,
       //initialData: initialData ,
@@ -47,7 +49,7 @@ class LoginScreen extends StatelessWidget with ValidationMixins {
     );
   }
 
-  Widget passwordField() {
+  Widget passwordField(Bloc bloc) {
     return StreamBuilder(
       stream: bloc.transformPassword,
       //initialData: initialData ,

@@ -19,5 +19,3 @@ class Bloc with BlocValidators {
     _passwordController.close();
   }
 }
-
-final bloc = Bloc();
